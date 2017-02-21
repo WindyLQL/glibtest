@@ -37,8 +37,41 @@
 #include "gatomic.h"
 #include "gtestutils.h"
 #include "gslice.h"
+#include<stdio.h>
+#define glib_log_file_path "/root/gib_test.txt"
+static FILE *g_glib_log_file = NULL;
+static void log_init(void)
+{
+	g_glib_log_file = fopen(glib_log_file_path, "awt");
+	return;
+}
 
-
+#define PRITN_LOG(format, ...) \
+		do {\
+			if(NULL == g_glib_log_file)\
+			{\
+				log_init();\
+			}\
+			if (1)\
+				{\
+				char janus_log_ts[64] = ""; \
+				char janus_log_src[128] = ""; \
+				if (1) { \
+					struct tm janustmresult; \
+					time_t janusltime = time(NULL); \
+					localtime_r(&janusltime, &janustmresult); \
+					strftime(janus_log_ts, sizeof(janus_log_ts), \
+							 "[%a %b %e %T %Y] ", &janustmresult); \
+				} \
+					snprintf(janus_log_src, sizeof(janus_log_src), \
+							  "[%s:%s:%d] ",__FILE__,__FUNCTION__,__LINE__); \
+				fprintf(g_glib_log_file,"%s%s" format, \
+					janus_log_ts, \
+					janus_log_src, \
+##__VA_ARGS__); \
+				fflush(g_glib_log_file);\
+}\
+		} while (0)
 /**
  * SECTION:hash_tables
  * @title: Hash Tables
@@ -707,7 +740,7 @@ g_hash_table_new_full (GHashFunc      hash_func,
                        GDestroyNotify value_destroy_func)
 {
   GHashTable *hash_table;
-
+  PRITN_LOG("enter g_hash_table_new_full\n");
   hash_table = g_slice_new (GHashTable);
   g_hash_table_set_shift (hash_table, HASH_TABLE_MIN_SHIFT);
   hash_table->nnodes             = 0;
