@@ -1,27 +1,31 @@
 # glibtest
-This project just provide you ways to help you understand glibc by debugging or printing debug info.
+* This project just provide you ways to help you understand glibc by debugging or printing debug info.
 
-#yum install glib (help you install dependency Library)
+## yum install glib (help you install dependency Library)
+```
 yum install glib2-2.46.2-4.el7.x86_64 -y
+```
+* then
+* download this project glib-2.47.92
 
-then
- download this project glib-2.47.92
-
-#compile the project  source
-
+## compile the project  source
+```
 ./configure
 make
 make install
 
+```
 [root@localhost glib-2.47.92]# ls /usr/local/lib/|grep glib
 glib-2.0
 libglib-2.0.la
 libglib-2.0.so
 libglib-2.0.so.0
 libglib-2.0.so.0.4792.0
+```
+## read link so
 
-#read link so
-t@localhost glib-2.47.92]# readelf -d mytest/hello
+```
+[roott@localhost glib-2.47.92]# readelf -d mytest/hello
 
 Dynamic section at offset 0x1e18 contains 25 entries:
   标记        类型                         名称/值
@@ -58,10 +62,10 @@ Dynamic section at offset 0x1e18 contains 25 entries:
 mv libglib-2.0.so.0.4792.0 /usr/lib64/
 ln -s libglib-2.0.so.0  libglib-2.0.so.0.4792.0
 
-
-#project test dir when you in project
+```
+## project test dir when you in project
 cd mytest
-#Compile
+## Compile
 gcc test_hashtable.c -o hello $(pkg-config --cflags --libs glib-2.0)
-#exec
+## exec
 ./hello
