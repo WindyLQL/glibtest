@@ -13,8 +13,6 @@ yum install glib2-2.46.2-4.el7.x86_64 -y
 ./configure
 make
 make install
-
-```
 [root@localhost glib-2.47.92]# ls /usr/local/lib/|grep glib
 glib-2.0
 libglib-2.0.la
@@ -26,7 +24,6 @@ libglib-2.0.so.0.4792.0
 
 ```
 [roott@localhost glib-2.47.92]# readelf -d mytest/hello
-
 Dynamic section at offset 0x1e18 contains 25 entries:
   标记        类型                         名称/值
  0x0000000000000001 (NEEDED)             共享库：[libglib-2.0.so.0]
@@ -57,15 +54,21 @@ Dynamic section at offset 0x1e18 contains 25 entries:
 [root@localhost glib-2.47.92]# find /usr/ -name libglib-2.0.so.0
 /usr/lib64/libglib-2.0.so.0
 /usr/local/lib/libglib-2.0.so.0 
-
-#mv so to running-time object dir
+```
+## mv so to running-time object dir
+```
 mv libglib-2.0.so.0.4792.0 /usr/lib64/
 ln -s libglib-2.0.so.0  libglib-2.0.so.0.4792.0
-
 ```
 ## project test dir when you in project
+```
 cd mytest
+```
 ## Compile
+```
 gcc test_hashtable.c -o hello $(pkg-config --cflags --libs glib-2.0)
+```
 ## exec
+```
 ./hello
+```
